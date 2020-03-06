@@ -2,7 +2,12 @@
 ## functions do
 
 ## Write a short comment describing this function
-
+# Create function that includes the get and set functions that either
+# retrieves current matrix stores new matrix in the environment.
+# The getinverse and setinverse functions does the same for the 
+# inverse matrix.
+# If a new matrix is stored in the environment the cached inverse
+# matrix is set to NULL
 
 makeCacheMatrix <- function(x = matrix()) {
   i <- NULL
@@ -21,9 +26,12 @@ makeCacheMatrix <- function(x = matrix()) {
 
 
 ## Write a short comment describing this function
+# This function will either retrieve the cached inverse matrix
+# or if there is no cached inverse matrix calculate the inverse
+# matrix and store it in the environment. 
 
 cacheSolve <- function(x, ...) {
-        ## Return a matrix that is the inverse of 'x'
+  ## Return a matrix that is the inverse of 'x'
   i <- x$getinverse()
   if(!is.null(i)) {
     message("getting cached data")
@@ -34,35 +42,3 @@ cacheSolve <- function(x, ...) {
   x$setinverse(i)
   i
 }
-
-makeVector <- function(x = numeric()) {
-  m <- NULL
-  set <- function(y) {
-    x <<- y
-    m <<- NULL
-  }
-  get <- function() x
-  setmean <- function(mean) m <<- mean
-  getmean <- function() m
-  list(set = set, get = get,
-       setmean = setmean,
-       getmean = getmean)
-}
-cachemean <- function(x, ...) {
-  m <- x$getmean()
-  if(!is.null(m)) {
-    message("getting cached data")
-    return(m)
-  }
-  data <- x$get()
-  m <- mean(data, ...)
-  x$setmean(m)
-  m
-}
-
-aVector <- makeVector(1:10)
-aVector$get() 
-aVector$getmean()
-aVector$set(30:50)
-cachemean(aVector) 
-aVector$getmean()
